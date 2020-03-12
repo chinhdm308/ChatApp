@@ -168,9 +168,9 @@ public class ProfileActivity extends AppCompatActivity {
         btnCancelFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelFriendRequest(userId);
-                btnAddFriend.setVisibility(View.VISIBLE);
+                cancelFriendRequest(userId, currentUser.getUid());
                 btnCancelFriend.setVisibility(View.INVISIBLE);
+                btnAddFriend.setVisibility(View.VISIBLE);
                 btnUnfriend.setVisibility(View.INVISIBLE);
             }
         });
@@ -178,7 +178,7 @@ public class ProfileActivity extends AppCompatActivity {
         btnRefuse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelFriendRequest(currentUser.getUid());
+                cancelFriendRequest(currentUser.getUid(), userId);
             }
         });
 
@@ -186,7 +186,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addFriend();
-                cancelFriendRequest(currentUser.getUid());
+                cancelFriendRequest(currentUser.getUid(), userId);
             }
         });
 
@@ -261,21 +261,20 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void cancelFriendRequest(String id) {
-        final DatabaseReference removeFriendRequestsRef = FirebaseDatabase.getInstance().getReference("FriendRequests");
-        removeFriendRequestsRef.child(id).child(currentUser.getUid()).removeValue();
+    private void cancelFriendRequest(String id1, String id2) {
+        final DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("FriendRequests");
+        databaseRef.child(id1).child(id2).removeValue();
     }
 
     private void addFriendRequest() {
-        final DatabaseReference addFriendRequestsRef = FirebaseDatabase.getInstance().getReference("FriendRequests")
+        final DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("FriendRequests")
                 .child(userId).child(currentUser.getUid());
-        addFriendRequestsRef.addValueEventListener(new ValueEventListener() {
+        databaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.exists()) {
-                    addFriendRequestsRef.child("id").setValue(currentUser.getUid());
+                    databaseRef.child("id").setValue(currentUser.getUid());
                     showMessage("Sent friend request to " + user.getUsername());
-                    btnAddFriend.setText("Cancel Friend");
                 }
             }
 
