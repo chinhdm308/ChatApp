@@ -54,9 +54,8 @@
         <Button
             android:id="@+id/btn_register"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_marginTop="10dp"
-            android:background="@color/colorPrimaryDark"
             android:text="Register"
             android:textColor="#fff" />
     </LinearLayout>

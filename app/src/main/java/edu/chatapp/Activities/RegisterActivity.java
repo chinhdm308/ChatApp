@@ -70,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void showMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     private void registerUserAccount(String email, final String username, String password) {

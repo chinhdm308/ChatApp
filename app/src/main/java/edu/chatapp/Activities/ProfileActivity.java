@@ -118,9 +118,11 @@ public class ProfileActivity extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
                     btnAddFriend.setVisibility(View.INVISIBLE);
                     btnCancelFriend.setVisibility(View.VISIBLE);
+                    btnUnfriend.setVisibility(View.INVISIBLE);
                 } else {
                     btnAddFriend.setVisibility(View.VISIBLE);
                     btnCancelFriend.setVisibility(View.INVISIBLE);
+                    btnUnfriend.setVisibility(View.INVISIBLE);
                 }
 
                 if (currentUser.getUid().equals(userId)) {
@@ -158,10 +160,7 @@ public class ProfileActivity extends AppCompatActivity {
         btnAddFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addFriendRequest();
-                btnAddFriend.setVisibility(View.INVISIBLE);
-                btnCancelFriend.setVisibility(View.VISIBLE);
-                btnUnfriend.setVisibility(View.INVISIBLE);
+                sendFriendRequest();
             }
         });
 
@@ -169,9 +168,6 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 cancelFriendRequest(userId, currentUser.getUid());
-                btnCancelFriend.setVisibility(View.INVISIBLE);
-                btnAddFriend.setVisibility(View.VISIBLE);
-                btnUnfriend.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -194,9 +190,6 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 unFriend();
-                btnAddFriend.setVisibility(View.VISIBLE);
-                btnCancelFriend.setVisibility(View.INVISIBLE);
-                btnUnfriend.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -262,20 +255,18 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void cancelFriendRequest(String id1, String id2) {
-        final DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("FriendRequests");
-        databaseRef.child(id1).child(id2).removeValue();
+        final DatabaseReference cancelFriendRequest = FirebaseDatabase.getInstance().getReference("FriendRequests");
+        cancelFriendRequest.child(id1).child(id2).child("id").removeValue();
     }
 
-    private void addFriendRequest() {
-        final DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("FriendRequests")
+    private void sendFriendRequest() {
+        final DatabaseReference sendFriendRequest = FirebaseDatabase.getInstance().getReference("FriendRequests")
                 .child(userId).child(currentUser.getUid());
-        databaseRef.addValueEventListener(new ValueEventListener() {
+        sendFriendRequest.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists()) {
-                    databaseRef.child("id").setValue(currentUser.getUid());
-                    showMessage("Sent friend request to " + user.getUsername());
-                }
+                sendFriendRequest.child("id").setValue(currentUser.getUid());
+                showMessage("Sent friend request to " + user.getUsername());
             }
 
             @Override
@@ -358,6 +349,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void showMessage(String message) {
-        Toast.makeText(ProfileActivity.this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(ProfileActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 }

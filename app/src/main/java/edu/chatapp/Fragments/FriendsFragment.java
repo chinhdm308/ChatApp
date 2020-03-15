@@ -35,7 +35,6 @@ import edu.chatapp.R;
 public class FriendsFragment extends Fragment {
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
-    private LinearLayout bottomSheet;
 
     private Animation animFab;
 
@@ -56,8 +55,6 @@ public class FriendsFragment extends Fragment {
         readFriends();
 
         fab = view.findViewById(R.id.fab);
-        // get the bottom sheet view
-        bottomSheet = view.findViewById(R.id.bottom_sheet);
 
         animFab = AnimationUtils.loadAnimation(getContext(), R.anim.anim_fab);
 
