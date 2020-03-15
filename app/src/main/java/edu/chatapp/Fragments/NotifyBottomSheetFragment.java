@@ -27,7 +27,7 @@ import edu.chatapp.Model.Friend;
 import edu.chatapp.Model.User;
 import edu.chatapp.R;
 
-public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment {
+public class NotifyBottomSheetFragment extends BottomSheetDialogFragment {
     private RecyclerView recyclerView;
     private FriendRequestAdapter friendRequestAdapter;
     private List<User> userList;

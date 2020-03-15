@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.chatapp.Adapters.FriendAdapter;
-import edu.chatapp.Adapters.FriendRequestAdapter;
 import edu.chatapp.Model.Friend;
 import edu.chatapp.Model.User;
 import edu.chatapp.R;
@@ -71,7 +69,7 @@ public class FriendsFragment extends Fragment {
     }
 
     public void showBottomSheetDialogFragment() {
-        CustomBottomSheetDialogFragment bottomSheetFragment = new CustomBottomSheetDialogFragment();
+        NotifyBottomSheetFragment bottomSheetFragment = new NotifyBottomSheetFragment();
         bottomSheetFragment.show(getFragmentManager(), "Custom Bottom Sheet");
     }
 
